@@ -1,7 +1,7 @@
 import requests as req
 from bs4 import BeautifulSoup as bs
 import time
-
+from selenium import webdriver as wb
 
 class SiteVendaSeminovos:
 
@@ -105,5 +105,39 @@ class Unidas(SiteVendaSeminovos):
         return car[0].text.replace(".", "").replace(",", ".")
 
 
+class Localiza(SiteVendaSeminovos):
+    def __init__(self, url, emprise_name):
+        super().__init__(url, emprise_name)
+        self.__web_driver = wb.Chrome("/home/rafa/Documentos/web-scrap/chromedriver")
+        self.__web_driver.get(url)
+        self.__id_next_page = "ctl00_ctl42_g_f221d036_75d3_4ee2_893d_0d7b40180245_ProximaPaginaSuperior"
+        self.__finished = False
 
+    def set_soup(self):
+        self.__soup = bs(self.__web_driver.page_source, "lxml")
 
+    def is_finished(self):
+        return self.__finished
+
+    def get_cars(self):
+        price = self.__soup.find_all(class_="busca-right-container")
+        cars = self.__soup.find_all(class_="busca-left-container")
+        return [(price, list(car.stripped_strings)) for car, price in zip(cars, price)]
+
+    def get_year(self, car):
+        return car[1][1].split("/")[0]
+
+    def get_kilometragem(self, car):
+        return car[1][2]
+
+    def get_model(self, car):
+        return car[1][0]
+
+    def get_price(self, car):
+        return list(car[0].stripped_strings)[0][3:].replace(".", "")
+
+    def next_page(self):
+        try:
+            self.__web_driver.find_element_by_id(self.__id_next_page).click()
+        except:
+            self.__finished = True
