@@ -1,0 +1,20 @@
+Data: Tue May 22 21:55:26 2018
+Empresa: Locamerica
+Tempo em segundos: 83
+Quantidade de carros: 1438
+
+Data: Tue May 22 21:58:12 2018
+Empresa: Unidas
+Tempo em segundos: 165
+Quantidade de carros: 2189
+
+Data: Tue May 22 22:01:08 2018
+Empresa: Movidas
+Tempo em segundos: 176
+Quantidade de carros: 2077
+
+Data: Tue May 22 22:26:17 2018
+Empresa: Localiza
+Tempo em segundos: 1508
+Quantidade de carros: 6027
+
