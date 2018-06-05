@@ -5,14 +5,17 @@ import json
 
 with sqlt.connect("seminovos.db") as con:
 
+    # Abertura do arquivo json que contém as urls dos sites e as consultas SQL
     strings_queries = json.load(open("urls_queries.json"))
 
+    # Criacao da tabela "vendas"
     criar_tabela_sql = strings_queries["criar_tabela_sql"]
     inserir_dados_sql = strings_queries["inserir_dados_sql"]
     cursor = con.cursor()
     cursor.execute(strings_queries["eliminar_tabela_se_existe"])
     cursor.execute(criar_tabela_sql)
 
+    # Instanciação de cada uma das classes dos sites
     movidas = Movidas(strings_queries["url_movidas"], "Movidas")
     unidas = Unidas(strings_queries["url_unidas"], "Unidas")
     localiza = Localiza(strings_queries["url_localiza"], "Localiza")
@@ -20,6 +23,7 @@ with sqlt.connect("seminovos.db") as con:
 
     data = {}
 
+    # Para cada página de cada site, extrai os dados e insere na tabela "vendas"
     for seller_site in [movidas, unidas, locamerica, localiza]:
         inicio_tempo = time.time()
         tamanho_inicio_tabela = len(cursor.execute("select * from vendas").fetchall())
