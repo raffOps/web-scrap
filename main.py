@@ -5,13 +5,12 @@ import json
 
 with sqlt.connect("seminovos.db") as con:
 
-    logs = open("arquivo_logs.txt", "a")
     strings_queries = json.load(open("urls_queries.json"))
-    log = "Data: {}\nEmpresa: {}\nTempo em segundos: {}\nQuantidade de carros: {}\n\n"
 
     criar_tabela_sql = strings_queries["criar_tabela_sql"]
     inserir_dados_sql = strings_queries["inserir_dados_sql"]
     cursor = con.cursor()
+    cursor.execute(strings_queries["eliminar_tabela_se_existe"])
     cursor.execute(criar_tabela_sql)
 
     movidas = Movidas(strings_queries["url_movidas"], "Movidas")
@@ -21,7 +20,7 @@ with sqlt.connect("seminovos.db") as con:
 
     data = {}
 
-    for seller_site in [localiza, movidas, unidas, locamerica]:
+    for seller_site in [movidas, unidas, locamerica, localiza]:
         inicio_tempo = time.time()
         tamanho_inicio_tabela = len(cursor.execute("select * from vendas").fetchall())
         while True:
@@ -35,11 +34,5 @@ with sqlt.connect("seminovos.db") as con:
                 data["Kilometragem"] = seller_site.get_kilometragem(car)
                 data["Ano"] = seller_site.get_year(car)
                 cursor.execute(inserir_dados_sql.format(**data))
+            con.commit()
             seller_site.goto_next_page()
-
-        con.commit()
-        tamanho_final = len(cursor.execute("select * from vendas").fetchall()) - tamanho_inicio_tabela
-        dia_horario = time.asctime()
-
-        logs.write(log.format(dia_horario, seller_site.emprise_name, int(time.time() - inicio_tempo), tamanho_final))
-    logs.close()
