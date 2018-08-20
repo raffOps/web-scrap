@@ -216,7 +216,7 @@ class Localiza(SiteVendaSeminovos):
     """
     def __init__(self, url, emprise_name):
         super().__init__(url, emprise_name)
-        self.__web_driver = wb.PhantomJS(os.path.abspath("phantomjs"))
+        self.__web_driver = wb.Chrome(os.path.abspath("chromedriver.exe"))
         self.__web_driver.get(url)
         self.__id_next_page = "ctl00_ctl42_g_f221d036_75d3_4ee2_893d_0d7b40180245_ProximaPaginaSuperior"
         self.__finished = False
