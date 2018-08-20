@@ -25,8 +25,6 @@ with sqlt.connect("seminovos.db") as con:
 
     # Para cada página de cada site, extrai os dados e insere na tabela "vendas"
     for seller_site in [movidas, unidas, locamerica, localiza]:
-        inicio_tempo = time.time()
-        tamanho_inicio_tabela = len(cursor.execute("select * from vendas").fetchall())
         while True:
             seller_site.set_soup()
             if seller_site.is_finished():
