@@ -8,3 +8,5 @@
 
 
 O BD contém os seguintes dados: Empresa de locação; Modelo do carro; Ano; Quilometragem e Preço. 
+
+Funcionando em 19/08/2018
