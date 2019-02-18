@@ -1,7 +1,7 @@
-Windows OS
-Google Chrome 64 bits in default location >= 68.0.3440.106
-Python >= 3.6.5
-Requests >= 2.18.4
-BeautifulSoup4 >= 4.6.0
-Selenium >= 3.13.0
-lxml >= 4.2.1
+#Windows OS
+#Google Chrome 64 bits in default location >= 68.0.3440.106
+Python>=3.6.5
+Requests>=2.18.4
+BeautifulSoup4>=4.6.0
+Selenium>=3.13.0
+lxml>=4.2.1
