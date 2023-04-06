@@ -281,10 +281,7 @@ class Locamerica(SiteVendaSeminovos):
         kilometragem = car[0][7].split()[0]
         if kilometragem.count(".") > 1:  # maior que 1000 KMs
             kilometragem = kilometragem.replace(".", "", 1)  # tira o primeiro "."
-        if kilometragem == '-':
-            return 0
-        else:
-            return kilometragem
+        return 0 if kilometragem == '-' else kilometragem
 
     def get_model(self, car):
         return car[0][1]
